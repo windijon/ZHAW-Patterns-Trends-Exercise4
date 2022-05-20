@@ -1,0 +1,36 @@
+---
+title: "Aufgabe_4"
+author: "windijon"
+date: '2022-05-16'
+output: html_document
+---
+
+
+### Task 1: Write your own functions
+
+Load the necessary libraries.
+
+```{r}
+
+library(readr)        # to import tabular data (e.g. csv)
+library(dplyr)        # to manipulate (tabular) data
+library(ggplot2)      # to visualize data
+library(sf)           # to handle spatial vector data
+library(terra)        # To handle raster data
+library(lubridate)    # To handle dates and times
+library(zoo)          # to handle Rolling window functions
+library(scales)       # to handle thousands separator
+
+```
+
+Create a function for our Euclidean distance calculation.
+
+```{r}
+
+Euclidean_Distance <- function(E_Cord1, E_Cord2, N_Cord1, N_Cord2){
+  sqrt((E_Cord1 - E_Cord2)^2 + (N_Cord1 - N_Cord2)^2)
+}
+
+Euclidean_Distance(E_Cord1 = 2570589, E_Cord2 = 2570573, N_Cord1 = 1205095, N_Cord2 = 1205096)
+
+```
