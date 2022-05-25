@@ -52,7 +52,7 @@ Filter the individuals Rosa and Sabi for the time-span 01.04.2015 - 15.04.2015
 ```{r}
 
 filter_wildschwein <- wildschwein %>% 
-  filter(TierName == c("Sabi", "Rosa"), DatetimeUTC >= as.Date("2015-04-01"), DatetimeUTC <= as.Date("2015-04-15"))
+  filter(DatetimeUTC > as.Date("2015-04-01"), DatetimeUTC <= as.Date("2015-04-15"), TierName == "Sabi" | TierName == "Rosa")
 filter_wildschwein
 
 ```
@@ -67,6 +67,29 @@ Round the minutes of "DatetimeUTC" to a multiple of 15 minutes, to match the two
 filter_wildschwein <- filter_wildschwein %>% 
   mutate(DatetimeRound = round_date(DatetimeUTC, unit = "15 minutes"))
 filter_wildschwein
+
+```
+
+
+### Task 4: Measuring distance at concurrent locations
+
+Split (one data-frame per animal), apply (join by "DatetimeRound", calculate Euclidean distances and determine if the animals meet (< 100 m)) & combine the two data-sets.
+
+```{r}
+
+ws_sabi <- filter_wildschwein %>% 
+  filter(TierName == "Sabi")
+ws_sabi
+
+ws_rosa <- filter_wildschwein %>% 
+  filter(TierName == "Rosa")
+ws_rosa
+
+ws_join <- inner_join(ws_sabi, ws_rosa, by = "DatetimeRound", suffix = c("_sabi", "_rosa")) %>% 
+  mutate(distance = sqrt((E_sabi - E_rosa)^2 + (N_sabi - N_rosa)^2),
+         meet = distance < 100)
+ws_join
+View(ws_join)
 
 ```
 
