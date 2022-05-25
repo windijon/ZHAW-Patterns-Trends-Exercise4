@@ -10,7 +10,7 @@ output: html_document
 
 Load the necessary libraries.
 
-```{r}
+```{r message = FALSE}
 
 library(readr)        # to import tabular data (e.g. csv)
 library(dplyr)        # to manipulate (tabular) data
@@ -25,7 +25,7 @@ library(scales)       # to handle thousands separator
 
 Create a function for our Euclidean distance calculation.
 
-```{r}
+```{r message = FALSE}
 
 Euclidean_Distance <- function(E_Cord1, E_Cord2, N_Cord1, N_Cord2){
   sqrt((E_Cord1 - E_Cord2)^2 + (N_Cord1 - N_Cord2)^2)
@@ -34,3 +34,26 @@ Euclidean_Distance <- function(E_Cord1, E_Cord2, N_Cord1, N_Cord2){
 Euclidean_Distance(E_Cord1 = 2570589, E_Cord2 = 2570573, N_Cord1 = 1205095, N_Cord2 = 1205096)
 
 ```
+
+
+### Task 2: Prepare Analysis
+
+Import the wild-boar data "wildschwein_BE_2056" as csv.
+
+```{r message = FALSE}
+
+wildschwein <- read_delim("wildschwein_BE_2056.csv",",")
+wildschwein
+
+```
+
+Filter the individuals Rosa and Sabi for the time-span 01.04.2015 - 15.04.2015
+
+```{r}
+
+filter_wildschwein <- wildschwein %>% 
+  filter(TierName == c("Sabi", "Rosa"), DatetimeUTC >= as.Date("2015-04-01"), DatetimeUTC <= as.Date("2015-04-15"))
+filter_wildschwein
+
+```
+
