@@ -57,3 +57,16 @@ filter_wildschwein
 
 ```
 
+
+### Task 3: Create Join Key
+
+Round the minutes of "DatetimeUTC" to a multiple of 15 minutes, to match the two animals temporally.
+
+```{r}
+
+filter_wildschwein <- filter_wildschwein %>% 
+  mutate(DatetimeRound = round_date(DatetimeUTC, unit = "15 minutes"))
+filter_wildschwein
+
+```
+
